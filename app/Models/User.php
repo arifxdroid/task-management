@@ -17,12 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
+    protected $fillable = ['name', 'email', 'employee_id', 'password', 'role_id'];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -42,4 +37,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Task::class, 'task_assignments');
+    }
 }
