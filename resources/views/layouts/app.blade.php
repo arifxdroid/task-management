@@ -13,6 +13,12 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- jQuery Modal -->
+        <link rel="stylesheet" href="{{asset('css/jquery.modal.min.css')}}"/>
+        <script src="{{ asset('js/jquery-3.7.1.min.js')}}"></script>
+        <script src="{{ asset('js/jquery.modal.min.js')}}"></script>
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

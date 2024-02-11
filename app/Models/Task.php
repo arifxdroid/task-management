@@ -20,4 +20,9 @@ class Task extends Model
     {
         return $this->belongsToMany(User::class, 'task_assignments');
     }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'task_assignments', 'task_id', 'user_id');
+    }
 }
