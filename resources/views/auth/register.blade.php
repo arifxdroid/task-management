@@ -2,11 +2,21 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <!-- Role -->
+        <input name="role" id="role" value="Manager" type="hidden">
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- employee_id -->
+        <div>
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="employee_id" class="block mt-1 w-full" type="text" name="employee_id" :value="old('employee_id')" required autofocus autocomplete="employee_id" />
+            <x-input-error :messages="$errors->get('employee_id')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
