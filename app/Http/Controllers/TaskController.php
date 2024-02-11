@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class TaskController extends Controller
@@ -14,7 +16,20 @@ class TaskController extends Controller
 
     public function index(Request $request) : View
     {
-        return \view('tasks.index');
+
+//        $userId = Auth::id();
+        $teammateRole = Role::where('name', 'Teammate')->first();
+        $tasks = Task::with('users')->whereHas('users', function($query){
+            $query->where('user_id', '=',  Auth::id() );
+        })->with('project')->get();
+
+        // Retrieve all users with the role 'Teammate'
+        $teammates = User::where('role_id', $teammateRole->id)->get();
+        $project = null;
+
+
+//        dd($tasks);
+        return \view('tasks.index', compact('tasks', 'teammates', 'project'));
     }
 
     public function store(Request $request) : View | JsonResponse

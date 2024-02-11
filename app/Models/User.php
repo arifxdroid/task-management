@@ -38,6 +38,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public static function doseEmployeeIdExists($empId) : bool
+    {
+        $check = false;
+        if(self::where('employee_id', $empId)->exists()){
+            $check = true;
+        }
+        return $check;
+    }
+
     public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Role::class);

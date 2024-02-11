@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::post('/teammate/save', [ProjectController::class, 'storeTeammate'])->name('teammate.store');
     Route::get('/projects/{project_code}', [ProjectController::class, 'show'])->name('projects.show');;
 
     Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');

@@ -1,66 +1,77 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Laravel Sail Project - [Task Management]
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project utilizes Laravel Sail for a development environment, providing a consistent and isolated experience with Docker containers.
 
-## About Laravel
+**Requirements:**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* Docker Desktop installed ([https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/): [https://docs.docker.com/desktop/install/windows-install/](https://docs.docker.com/desktop/install/windows-install/))
+* Basic understanding of Docker and Laravel
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Getting Started:**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-repo-url.git
+   ```
+2. **Navigate to the project directory:**
 
-## Learning Laravel
+3. **Copy the `.env.example` file and rename it to `.env`:**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. **Build and start the containers:**
+   ```bash
+   ./vendor/bin/sail up
+   ```
+5. **Install PHP dependencies:**
+   ```bash
+   ./vendor/bin/sail composer install
+   ```
+6. **Install Node.js dependencies:**
+   ```bash
+   npn install
+   ```
+   ```bash
+   npn run dev
+   ```
+7. **Run migration**
+   ```bash
+   ./vendor/bin/sail artisan migrate
+   ```
+8. **Run DB Seed**
+   ```bash
+   ./vendor/bin/sail artisan db:seed
+   ```
+9. **Access your application:**
+    - Open your browser and visit http://localhost:8000.
+    - Refer to `docker-compose.yml` for other service ports (database, mail, etc.).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Available Commands:**
 
-## Laravel Sponsors
+* `sail up`: Start the containers in detached mode.
+* `sail down`: Stop and remove the containers.
+* `sail shell`: Connect to a shell in the app container.
+* `sail artisan ...`: Run Artisan commands within the app container.
+* `sail php ...`: Run PHP scripts within the app container.
+* `sail composer ...`: Run Composer commands within the app container.
+* `sail npm ...`: Run npm commands within the app container.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Project Specifics:**
 
-### Premium Partners
+* **Additional Notes:** [If applicable, mention any unique aspects of your project setup or specific configurations]
+* **Database Credentials:** Configure `.env` file with appropriate database credentials and other settings.
+* **Testing:** [Describe how to run tests within the Sail environment if applicable]
+* **Deployment:** [Briefly explain deployment instructions if relevant]
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+**Contributing:**
 
-## Contributing
+* We welcome contributions! Please follow our contribution guidelines: [Link to guidelines if available]
+* Report any issues or bugs: [Link to issue tracker if available]
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**License:**
 
-## Code of Conduct
+This project is licensed under the [Your Project License] license.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Additional Resources:**
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+* Laravel Sail Documentation: [https://laravel.com/docs/10.x/sail](https://laravel.com/docs/10.x/sail): [https://laravel.com/docs/10.x/sail](https://laravel.com/docs/10.x/sail)
+* Sail Script Reference: [https://laravel.com/docs/10.x/sail](https://laravel.com/docs/10.x/sail): [https://laravel.com/docs/10.x/sail](https://laravel.com/docs/10.x/sail)

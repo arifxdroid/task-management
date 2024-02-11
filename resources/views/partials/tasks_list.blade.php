@@ -8,7 +8,9 @@
                        class="w-40 px-3 py-2 text-sm border rounded-lg focus:outline-none"
                        placeholder="Task Search...">
             </div>
-            <a href="#" id="addNewTask" type="submit" class="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600" data-action="New">Add New Task</a>
+            @can('create-project-task')
+                <a href="#" id="addNewTask" type="submit" class="px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600" data-action="New">Add New Task</a>
+            @endcan
         </div>
         <table class="w-full text-sm text-left" id="projectTaskListTable">
             <thead class="text-xs uppercase bg-gray-50">
@@ -40,8 +42,12 @@
                     <td class="task-status px-4 py-3">{{$task->status}}</td>
                     <td class="px-4 py-3">{{$task->updated_at}}</td>
                     <td class="px-4 py-3">
-                        <a href="#" class="btnTaskAction mr-2 text-blue-500 hover:text-blue-600" data-action="Edit">Edit</a>
-                        <a href="#" class="btnTaskAction text-green-500 hover:text-green-600" data-action="Update">Update</a>
+                        @can('create-project-task')
+                            <a href="#" class="btnTaskAction mr-2 text-blue-500 hover:text-blue-600" data-action="Edit">Edit</a>
+                        @endcan
+                        @can('update-task')
+                            <a href="#" class="btnTaskAction text-green-500 hover:text-green-600" data-action="Update">Update</a>
+                        @endcan
                     </td>
                 </tr>
             @endforeach
@@ -54,7 +60,15 @@
 <div class="modal" id="addNewTaskModal">
     <div class="max-w-md mx-auto my-auto hidden justify-center text-center" id="successMessage">
         <h2 class="p-4">Successfully created new Project!</h2>
-        <a href="/projects/{{$project->project_code}}" class="mt-5 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600">Back to projects.</a>
+        @php
+            $urlStr = '/tasks';
+        @endphp
+        @if($project)
+            <a href="/projects/{{$project?->project_code}}" class="mt-5 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600">Back to projects.</a>
+        @else
+            <a href="/tasks" class="mt-5 px-4 py-2 text-sm text-white bg-blue-500 rounded-lg hover:bg-blue-600">Back to projects.</a>
+        @endif
+
     </div>
     <form class="max-w-md mx-auto" id="newTaskForm">
         <input type="hidden" id="existingData">
@@ -71,7 +85,7 @@
         </div>
         <div class="mb-5">
             <label for="taskStatusInput" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-            <select disabled name="taskStatusInput" id="taskStatusInput" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500">
+            <select name="taskStatusInput" id="taskStatusInput" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg sm:text-md focus:ring-blue-500 focus:border-blue-500">
                 <option value="Pending">Pending</option>
                 <option value="Working">Working</option>
                 <option value="Done">Done</option>
@@ -141,6 +155,12 @@
 
             existingData.data(rowData);
 
+            if(action === 'Update'){
+                taskNameInput.attr('disabled', true);
+                taskDescriptionInput.attr('disabled', true)
+                teammateIdSelect.attr('disabled', true);
+            }
+
             //project-id task-id task-name task-status task-user-id
 
             console.log(action);
@@ -172,8 +192,9 @@
             let action = 'New';
             let id;
 
-            if(existingData.data()){
-                id = existingData.data().id
+            if(Object.keys(existingData.data()).length){
+                id = existingData.data().id;
+                projectId = existingData.data().projectId
             }
 
             if(!taskName) {

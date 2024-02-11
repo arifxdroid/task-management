@@ -6,11 +6,16 @@ use App\Models\Project;
 use App\Models\Role;
 use App\Models\Task;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Illuminate\Validation\Rules;
 
 class ProjectController extends Controller
 {
@@ -76,5 +81,30 @@ class ProjectController extends Controller
         }
 
         return response()->json(['message' => 'Project ' . ($request->has('project_id') ? 'updated' : 'created') . ' successfully', 'project' => $project], 200);
+    }
+
+    public function storeTeammate(Request $request): RedirectResponse|JsonResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'employee_id' => 'required|string|unique:users,employee_id',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => 'required|in:Manager,Teammate', // Assuming role is passed from the form
+        ]);
+
+        // Retrieve role ID based on role name
+        $role = Role::where('name', $request->role)->first();
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'employee_id' => $request->employee_id,
+            'password' => Hash::make($request->password),
+            'role_id' => $role->id,
+        ]);
+
+        event(new Registered($user));
+        return response()->json(['message' => 'Teammate added successfully'], 201);
     }
 }
